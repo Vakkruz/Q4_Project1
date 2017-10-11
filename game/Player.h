@@ -204,6 +204,7 @@ public:
 	int						armor;
 	int						maxarmor;
 	int						ammo[ MAX_AMMO ];
+	int						score; //Made change here -JW
 	int						clip[ MAX_WEAPONS ];
 	int						powerupEndTime[ POWERUP_MAX ];
 	int						weaponMods[ MAX_WEAPONS ];
@@ -242,6 +243,11 @@ public:
 	int						MaxAmmoForAmmoClass( idPlayer *owner, const char *ammo_classname ) const;
 	int						AmmoIndexForWeaponClass( const char *weapon_classname, int *ammoRequired = NULL );
 	const char *			AmmoClassForWeaponClass( const char *weapon_classname);
+
+
+	//My own functions here --JW
+	void					SetScore(int newScore);
+	int						GetScore(void);
 
 // RAVEN BEGIN
 // mekberg: if the player can pick up the ammo at this time

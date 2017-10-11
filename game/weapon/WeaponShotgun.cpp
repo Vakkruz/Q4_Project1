@@ -18,6 +18,9 @@ public:
 	void					Restore				( idRestoreGame *savefile );
 	void					PreSave				( void );
 	void					PostSave			( void );
+	idInventory				inventory;
+	idCmdArgs				huh;
+	int						numStor;
 
 protected:
 	int						hitscans;
@@ -88,6 +91,13 @@ void rvWeaponShotgun::PostSave ( void ) {
 
 
 /*
+===================
+SpawnOnShoot
+===================
+*/
+
+
+/*
 ===============================================================================
 
 	States 
@@ -114,7 +124,13 @@ stateResult_t rvWeaponShotgun::State_Idle( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( !AmmoAvailable( ) ) {
-				SetStatus( WP_OUTOFAMMO );
+				//SetStatus( WP_OUTOFAMMO );
+				//inventory.AmmoIndexForWeaponIndex();
+
+
+
+
+				//made change here
 			} else {
 				SetStatus( WP_READY );
 			}

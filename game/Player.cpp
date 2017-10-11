@@ -202,6 +202,7 @@ void idInventory::Clear( void ) {
 	powerups			= 0;
 	armor				= 0;
 	maxarmor			= 0;
+	//score				= 0;
 	secretAreasDiscovered = 0;
 
 	memset( ammo, 0, sizeof( ammo ) );
@@ -1358,6 +1359,47 @@ idPlayer::SetShowHud
 bool idPlayer::GetShowHud( void )	{
 	return !disableHud;
 }
+
+
+/*
+
+FUNCTION CREATED BY JW
+===============
+idPlayer::GetScore
+==================
+*/
+
+int idInventory::GetScore(void) {
+	return score;
+}
+
+
+/*
+FUNCTION CREATED BY JW
+==================
+IDPLAYER::SETSCORE
+==================
+*/
+
+void idInventory::SetScore(int newScore) {
+
+	int p_score = idInventory::GetScore();
+
+	p_score += newScore;
+
+	score = p_score;
+	
+	
+}
+
+
+
+
+
+
+
+
+
 
 /*
 ==============
@@ -3404,6 +3446,14 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 		_hud->SetStateFloat	( "player_armorpct", idMath::ClampFloat ( 0.0f, 1.0f, (float)inventory.armor / (float)inventory.maxarmor ) );
 		_hud->HandleNamedEvent ( "updateArmor" );
 	}
+
+	//JW CODE BEGINS
+
+	temp = _hud->State().GetInt("player_score", "-1");
+	if (temp != inventory.score) {
+		
+	}
+
 	
 	// Boss bar
 	if ( _hud->State().GetInt ( "boss_health", "-1" ) != (bossEnemy ? bossEnemy->health : -1) ) {

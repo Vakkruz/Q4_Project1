@@ -1110,6 +1110,7 @@ void Cmd_Trigger_f( const idCmdArgs &args ) {
 Cmd_Spawn_f
 ===================
 */
+
 void Cmd_Spawn_f( const idCmdArgs &args ) {
 #ifndef _MPBETA
 	const char *key, *value;
@@ -1124,10 +1125,12 @@ void Cmd_Spawn_f( const idCmdArgs &args ) {
 		return;
 	}
 
+	
 	if ( args.Argc() & 1 ) {	// must always have an even number of arguments
 		gameLocal.Printf( "usage: spawn classname [key/value pairs]\n" );
 		return;
 	}
+	
 
 	yaw = player->viewAngles.yaw;
 
@@ -1135,9 +1138,10 @@ void Cmd_Spawn_f( const idCmdArgs &args ) {
 	dict.Set( "classname", value );
 	dict.Set( "angle", va( "%f", yaw + 180 ) );
 
-	org = player->GetPhysics()->GetOrigin() + idAngles( 0, yaw, 0 ).ToForward() * 80 + idVec3( 0, 0, 1 );
+	org = player->GetPhysics()->GetOrigin() + idAngles( 0, yaw, 0 ).ToForward() * 180 + idVec3( 5, 0, 10 );
 	dict.Set( "origin", org.ToString() );
 
+	/*
 	for( i = 2; i < args.Argc() - 1; i += 2 ) {
 
 		key = args.Argv( i );
@@ -1145,21 +1149,28 @@ void Cmd_Spawn_f( const idCmdArgs &args ) {
 
 		dict.Set( key, value );
 	}
+	*/
+	
 
 // RAVEN BEGIN
 // kfuller: want to know the name of the entity I spawned
 	idEntity *newEnt = NULL;
 	gameLocal.SpawnEntityDef( dict, &newEnt );
 
+	
 	if (newEnt)	{
 		gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
 	}
+	
 // RAVEN END
 #endif // !_MPBETA
 }
 
 // RAVEN BEGIN
 // ddynerman: MP spawning command for performance testing
+
+
+
 /*
 ===================
 Cmd_EvaluateMPPerformance_f
