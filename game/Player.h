@@ -204,7 +204,6 @@ public:
 	int						armor;
 	int						maxarmor;
 	int						ammo[ MAX_AMMO ];
-	int						score; //Made change here -JW
 	int						clip[ MAX_WEAPONS ];
 	int						powerupEndTime[ POWERUP_MAX ];
 	int						weaponMods[ MAX_WEAPONS ];
@@ -244,10 +243,6 @@ public:
 	int						AmmoIndexForWeaponClass( const char *weapon_classname, int *ammoRequired = NULL );
 	const char *			AmmoClassForWeaponClass( const char *weapon_classname);
 
-
-	//My own functions here --JW
-	void					SetScore(int newScore);
-	int						GetScore(void);
 
 // RAVEN BEGIN
 // mekberg: if the player can pick up the ammo at this time
@@ -306,6 +301,8 @@ public:
 	int						buttonMask;
 	int						oldButtons;
 	int						oldFlags;
+
+	int						score;
 
 	int						lastHitTime;			// last time projectile fired by player hit target
 	int						lastSavingThrowTime;	// for the "free miss" effect
@@ -458,6 +455,15 @@ public:
 	void					SpawnFromSpawnSpot( void );
 	void					SpawnToPoint( const idVec3	&spawn_origin, const idAngles &spawn_angles );
 	void					SetClipModel( bool forceSpectatorBBox = false );	// spectator mode uses a different bbox size
+
+
+
+		//My own functions here --JW
+	void					SetScore(int newScore);
+	int						GetScore(void);
+
+
+
 
 	void					SavePersistantInfo( void );
 	void					RestorePersistantInfo( void );

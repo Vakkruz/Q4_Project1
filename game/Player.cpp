@@ -202,7 +202,6 @@ void idInventory::Clear( void ) {
 	powerups			= 0;
 	armor				= 0;
 	maxarmor			= 0;
-	//score				= 0;
 	secretAreasDiscovered = 0;
 
 	memset( ammo, 0, sizeof( ammo ) );
@@ -1084,6 +1083,9 @@ idPlayer::idPlayer() {
 	godmode					= false;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
 
+	//Made change here
+	score					= 0;
+
 	spawnAnglesSet			= false;
 	spawnAngles				= ang_zero;
 	viewAngles				= ang_zero;
@@ -1369,7 +1371,7 @@ idPlayer::GetScore
 ==================
 */
 
-int idInventory::GetScore(void) {
+int idPlayer::GetScore(void) {
 	return score;
 }
 
@@ -1381,9 +1383,9 @@ IDPLAYER::SETSCORE
 ==================
 */
 
-void idInventory::SetScore(int newScore) {
+void idPlayer::SetScore(int newScore) {
 
-	int p_score = idInventory::GetScore();
+	int p_score = idPlayer::GetScore();
 
 	p_score += newScore;
 
@@ -1869,6 +1871,9 @@ void idPlayer::Spawn( void ) {
 	physicsObj.SetClipMask( MASK_PLAYERSOLID );
 	SetPhysics( &physicsObj );
 	InitAASLocation();
+
+	//Made change here -- JW
+	SetScore(0);
 	
 	skin = renderEntity.customSkin;
 
@@ -3450,8 +3455,9 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	//JW CODE BEGINS
 
 	temp = _hud->State().GetInt("player_score", "-1");
-	if (temp != inventory.score) {
-		
+	if (temp != score) {
+		_hud->SetStateInt("player_score", score);
+		_hud->HandleNamedEvent("updateScore");
 	}
 
 	
