@@ -1665,6 +1665,8 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		aiManager.AnnounceDeath ( this, attacker );
    	}
 
+
+
 	if ( attacker && attacker->IsType( idActor::GetClassType() ) ) {
 		gameLocal.AlertAI( ( idActor * )attacker );
 	}
@@ -1680,6 +1682,13 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	CheckDeathObjectives();
 
 	ClearEnemy();
+
+	//JW CODE STARTS HERE -- Determines if enemy is killed by player
+	if (attacker->IsType(idPlayer::GetClassType())) {
+		idPlayer* attackerPlayer = static_cast<idPlayer*>(attacker);
+		attackerPlayer->SetScore(50);
+	}
+
 
 	// make monster nonsolid
 	physicsObj.SetContents( 0 );

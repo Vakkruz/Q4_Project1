@@ -3455,6 +3455,7 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	//JW CODE BEGINS
 
 	temp = _hud->State().GetInt("player_score", "-1");
+	//gameLocal.Printf("%d\n", score);
 	if (temp != score) {
 		_hud->SetStateInt("player_score", score);
 		_hud->HandleNamedEvent("updateScore");
