@@ -302,7 +302,12 @@ public:
 	int						oldButtons;
 	int						oldFlags;
 
+
+	//JW VARIABLE STARTS HERE
 	int						score;
+	int						multiplier;
+	int						killcount;
+	//JW VARIABLE END HERE
 
 	int						lastHitTime;			// last time projectile fired by player hit target
 	int						lastSavingThrowTime;	// for the "free miss" effect
@@ -458,13 +463,19 @@ public:
 
 
 
-		//My own functions here --JW
-	void					SetScore(int newScore);
+		//My own functions here -- JW
+	void					SetScore(int newScore, int multiplier);
+	void					SetMultiplier(int newMulti);
+	void					SetM_KillCount(int newKill);
+
+	void					ResetM_KillCounter(void);
+
+	int						GetMultiplier(void);
+	int						GetM_KillCount(void);
 	int						GetScore(void);
 
 
-
-
+	
 	void					SavePersistantInfo( void );
 	void					RestorePersistantInfo( void );
 	void					SetLevelTrigger( const char *levelName, const char *triggerName );

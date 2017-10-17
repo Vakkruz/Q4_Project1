@@ -1083,8 +1083,11 @@ idPlayer::idPlayer() {
 	godmode					= false;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
 
-	//Made change here
+	//Made change here -- JW
 	score					= 0;
+	multiplier				= 1;
+	killcount				= 0;
+
 
 	spawnAnglesSet			= false;
 	spawnAngles				= ang_zero;
@@ -1383,21 +1386,96 @@ IDPLAYER::SETSCORE
 ==================
 */
 
-void idPlayer::SetScore(int newScore) {
+void idPlayer::SetScore(int newScore, int newMultiplier) {
 
 	int p_score = idPlayer::GetScore();
 
-	p_score += newScore;
+	p_score += newScore * newMultiplier;
 
 	score = p_score;
 	
+}
+
+/*
+FUNCTION CREATED BY JW
+==================
+IDPLAYER::SETMULTIPLIER
+==================
+*/
+
+void idPlayer::SetMultiplier(int killNum) {
 	
+	//"killNum" refers to the number of enemies killed. If the player kills X amount
+	//of enemies in a row without taking damage, a score multiplier will get added.
+
+	if (killNum != 0) {
+		if (killNum == 2) {
+			multiplier = 2;
+		}if (killNum == 4) {
+			multiplier = 3;
+		}if (killNum == 6) {
+			multiplier = 4;
+		}
+	}
+
+	if (killNum == 0) {
+		multiplier = 1;
+	}
+}
+
+/*
+FUNCTION CREATED BY JW
+==================
+IDPLAYER::GETMULTIPLIER
+==================
+*/
+
+int idPlayer::GetMultiplier() {
+	return multiplier;
 }
 
 
+/*
+FUNCTION CREATED BY JW
+==================
+IDPLAYER::SETM_KILLCOUNT
+==================
+*/
+void idPlayer::SetM_KillCount(int newKill) {
 
+	int p_kill = idPlayer::GetM_KillCount();
 
+	p_kill += newKill;
 
+	killcount = p_kill;
+
+}
+
+/*
+FUNCTION CREATED BY JW
+==================
+IDPLAYER::RESETM_KILLCOUNT
+==================
+*/
+
+//This function will reset the kill counter if the player takes any damage.
+
+void idPlayer::ResetM_KillCounter() {
+	
+	killcount = 0;
+
+}
+
+/*
+FUNCTION CREATED BY JW
+==================
+IDPLAYER::GetM_KillCount
+==================
+*/
+
+int idPlayer::GetM_KillCount() {
+	return killcount;
+}
 
 
 
@@ -1408,6 +1486,7 @@ void idPlayer::SetScore(int newScore) {
 idPlayer::SetWeapon
 ==============
 */
+
 void idPlayer::SetWeapon( int weaponIndex ) {
 	if ( weapon && weaponIndex == currentWeapon ) {
 		return;
@@ -1872,9 +1951,6 @@ void idPlayer::Spawn( void ) {
 	SetPhysics( &physicsObj );
 	InitAASLocation();
 
-	//Made change here -- JW
-	SetScore(0);
-	
 	skin = renderEntity.customSkin;
 
 	// only the local player needs guis
@@ -3455,13 +3531,16 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	//JW CODE BEGINS
 
 	temp = _hud->State().GetInt("player_score", "-1");
-	//gameLocal.Printf("%d\n", score);
 	if (temp != score) {
 		_hud->SetStateInt("player_score", score);
 		_hud->HandleNamedEvent("updateScore");
 	}
 
+	//gameLocal.Printf("%d\n", multiplier);
 	
+	_hud->SetStateString("player_multi", va("MULTIPLIER: %dx ",multiplier));
+
+
 	// Boss bar
 	if ( _hud->State().GetInt ( "boss_health", "-1" ) != (bossEnemy ? bossEnemy->health : -1) ) {
 		if ( !bossEnemy || bossEnemy->health <= 0 ) {
@@ -10273,7 +10352,11 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 		statManager->Damage( attacker, this, methodOfDeath, damage );
 	}
-		
+	
+	//JW CODE HERE -- If the player is damaged at all, the kill counter and multiplier is reset
+	ResetM_KillCounter();
+	SetMultiplier(0); //NOTE: the 0 does not reset the multiplier back to 0, but rather, back to 1; The player still needs to score :)
+
 // RAVEN BEGIN
 // MCG - added damage over time
 	if ( !inDamageEvent ) {

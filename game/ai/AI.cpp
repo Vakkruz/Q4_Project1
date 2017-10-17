@@ -1683,10 +1683,16 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 
 	ClearEnemy();
 
-	//JW CODE STARTS HERE -- Determines if enemy is killed by player
+	//JW CODE STARTS HERE -- Determines if enemy is killed by player and calculates score based on number of enemies killed and proper multiplier
 	if (attacker->IsType(idPlayer::GetClassType())) {
 		idPlayer* attackerPlayer = static_cast<idPlayer*>(attacker);
-		attackerPlayer->SetScore(50);
+		attackerPlayer->SetM_KillCount(1);
+		attackerPlayer->SetMultiplier(attackerPlayer->GetM_KillCount());
+		attackerPlayer->SetScore(150, attackerPlayer->GetMultiplier());
+
+		if (attackerPlayer->GetM_KillCount() % 6 == 0) { //For every 6 kills, the player gets a *single* rocket
+			attackerPlayer->GiveItem("ammo_rocketlauncher");
+		}
 	}
 
 
