@@ -14,3 +14,10 @@ How to Play:
    * If you take damage, the multiplier is reset
    * For every 6th enemy you kill, you get **one** rocket. If you already have a rocket, you get ammo and health instead.
    * NOTE: there is an "invisible" kill counter keeping track of your kills, which determines your multiplier. ***When your multiplier drops, so does your kill count*** so do your best to not get hit :)
+
+
+## Installation notes:
+
+The "script files" folder to keep my script/def files to send over git, with them inserted into their proper pak files.
+
+There is a shortcut also placed in the script files folder that can be used to launch the mod directly, however you will likely need to change the installation directory in the Quake 4, as I have the GOG version.
