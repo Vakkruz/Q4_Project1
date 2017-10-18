@@ -1680,7 +1680,7 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 
 	OnDeath();
 	CheckDeathObjectives();
-
+	
 	ClearEnemy();
 
 	//JW CODE STARTS HERE -- Determines if enemy is killed by player and calculates score based on number of enemies killed and proper multiplier
@@ -1690,8 +1690,16 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		attackerPlayer->SetMultiplier(attackerPlayer->GetM_KillCount());
 		attackerPlayer->SetScore(150, attackerPlayer->GetMultiplier());
 
-		if (attackerPlayer->GetM_KillCount() % 6 == 0) { //For every 6 kills, the player gets a *single* rocket
-			attackerPlayer->GiveItem("ammo_rocketlauncher");
+
+		if (attackerPlayer->GetM_KillCount() % 6 == 0) { //For every 6 kills, the player can a *single* rocket. Checks to see if the player already has a rocket before 
+			if (attackerPlayer->inventory.HasAmmo("weapon_rocketlauncher") == 0) {
+				attackerPlayer->GiveItem("ammo_rocketlauncher");
+			}
+			else {
+				attackerPlayer->GiveItem("ammo_shotgun");
+				attackerPlayer->GiveItem("ammo_machinegun");
+				attackerPlayer->GiveItem("item_health_shard");
+			}
 		}
 	}
 

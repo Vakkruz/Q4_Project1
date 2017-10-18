@@ -1,6 +1,6 @@
 # Q4_Project1
 
-Hey what's up. This is my project for Quake 4.
+Hey what's up. I'm Joshua West-Williams and this is my project for Quake 4.
 
 How to Play:
 
@@ -11,5 +11,6 @@ How to Play:
    * 2 enemies killed = 2x
    * 4 enemies killed = 3x
    * 6 enemies killed = 4x
-   * If you take damage, the multiplier is reset.
-   * For every 6th enemy you kill, you get a rocket.
+   * If you take damage, the multiplier is reset
+   * For every 6th enemy you kill, you get **one** rocket. If you already have a rocket, you get ammo and health instead.
+   * NOTE: there is an "invisible" kill counter keeping track of your kills, which determines your multiplier. ***When your multiplier drops, so does your kill count*** so do your best to not get hit :)
