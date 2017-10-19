@@ -1691,14 +1691,15 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		attackerPlayer->SetScore(150, attackerPlayer->GetMultiplier());
 
 
-		if (attackerPlayer->GetM_KillCount() % 6 == 0) { //For every 6 kills, the player can a *single* rocket. Checks to see if the player already has a rocket before 
+		if (attackerPlayer->GetM_KillCount() % 6 == 0) {	// For every 6 kills, the player can a *single* rocket. Checks to see if the player already has a rocket
+															// If they have another rocket, they get more ammo and armor instead.
 			if (attackerPlayer->inventory.HasAmmo("weapon_rocketlauncher") == 0) {
 				attackerPlayer->GiveItem("ammo_rocketlauncher");
 			}
 			else {
 				attackerPlayer->GiveItem("ammo_shotgun");
 				attackerPlayer->GiveItem("ammo_machinegun");
-				attackerPlayer->GiveItem("item_health_shard");
+				attackerPlayer->GiveItem("item_armor_shard");
 			}
 		}
 	}

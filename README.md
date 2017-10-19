@@ -13,11 +13,11 @@ How to Play:
    * 6 enemies killed = 4x score
    * If you take damage, the multiplier is reset.
    * For every 6th enemy you kill, you get **one** rocket. If you already have a rocket, you get ammo and health instead.
-   * NOTE: there is an "invisible" kill counter keeping track of your kills, which determines your multiplier. ***When your multiplier drops, so does your kill count*** so do your best to not get hit :)
+   * NOTE: there is an invisible kill counter keeping track of your kills, which determines your multiplier. ***When your multiplier drops, so does your kill count*** so do your best to not get hit :)
 
 
 ## Installation notes:
 
-The "script files" folder to keep my script/def files to send over git, with them inserted into their proper pak files. Pak022 is complete however, pak001 is not, this is because it's too large to send over git. Instead, I've packed pak001 to contain the only file I edited: hud.gui. Simply grab the original pak001 file from your q4base folder and then drop the gui folder in there.
+The "Misc files" folder to keep my script/def files to send over git in addition to a README telling you where to place the script files.
 
 There is a shortcut also placed in the script files folder that can be used to launch the mod directly, however you will likely need to change the installation directory in the Quake 4, as I have the GOG version. **BE SURE TO NAME YOUR MOD FOLDER 'super'**
